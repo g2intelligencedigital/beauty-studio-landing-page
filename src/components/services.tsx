@@ -10,9 +10,8 @@ type FilterType = typeof ALL | ServiceCategory;
 const filters: { key: FilterType; label: string }[] = [
   { key: "todos", label: "Todos" },
   { key: "rostro", label: "Rostro" },
-  { key: "cuerpo", label: "Cuerpo" },
   { key: "manos", label: "Manos" },
-  { key: "pies", label: "Pies" },
+  { key: "cuerpo", label: "Cuerpo" },
 ];
 
 const badgeStyle: Record<string, string> = {
@@ -42,7 +41,7 @@ export function Services() {
           <p className="font-sans text-[11px] tracking-[0.25em] uppercase text-[#c9647b] font-semibold mb-3">
             Lo que hacemos
           </p>
-          <h2 className="font-heading text-[#1c1c1c] text-4xl md:text-5xl">
+          <h2 className="font-display text-[#1c1c1c] text-4xl md:text-5xl">
             Nuestros Servicios
           </h2>
         </motion.div>
@@ -83,6 +82,28 @@ export function Services() {
                 transition={{ duration: 0.4, ease, delay: i * 0.06 }}
                 className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col gap-4"
               >
+                {service.image && (
+                  <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.name}
+                      className={`w-full h-full object-cover ${service.imageClass ?? ""}`}
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                {service.video && (
+                  <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-[#1c1c1c]">
+                    <video
+                      src={service.video}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
                 <div className="flex items-center justify-between">
                   <span className="text-[9px] tracking-widest uppercase font-sans font-semibold px-3 py-1.5 rounded-full bg-[#f5c6d0] text-[#7a2b3d]">
                     {CATEGORY_LABELS[service.category]}

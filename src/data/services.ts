@@ -1,11 +1,15 @@
-export type ServiceCategory = "rostro" | "cuerpo" | "manos" | "pies";
+export type ServiceCategory = "rostro" | "cuerpo" | "manos";
 
 export interface Service {
   id: string;
   name: string;
   description: string;
   price: number;
+  priceLabel?: string;
   category: ServiceCategory;
+  image?: string;
+  imageClass?: string;
+  video?: string;
   badge?: "MÁS PEDIDO" | "PROMO DEL MES";
 }
 
@@ -13,14 +17,12 @@ export const CATEGORY_LABELS: Record<ServiceCategory, string> = {
   rostro: "Rostro",
   cuerpo: "Cuerpo",
   manos: "Manos",
-  pies: "Pies",
 };
 
 export const CATEGORY_SUBCATEGORIES: Record<ServiceCategory, string[]> = {
-  rostro: ["Faciales", "Cejas", "Pestañas"],
-  cuerpo: ["Depilación", "Masajes"],
-  manos: ["Manicura", "Nail Art"],
-  pies: ["Pedicura", "Esmaltado"],
+  rostro: ["Cejas", "Pestañas"],
+  cuerpo: ["Depilación"],
+  manos: ["Manicura"],
 };
 
 export const services: Service[] = [
@@ -29,49 +31,89 @@ export const services: Service[] = [
     name: "Lifting de Pestañas",
     description:
       "Riza y define tus pestañas naturales sin extensiones. Resultado natural, dura hasta 8 semanas.",
-    price: 6000,
+    price: 14000,
     category: "rostro",
+    image: "/images/services/lifting.jpeg",
     badge: "MÁS PEDIDO",
   },
   {
-    id: "hidratacion-profunda",
-    name: "Hidratación Profunda Facial",
+    id: "laminado-cejas",
+    name: "Laminado de Cejas",
     description:
-      "Tratamiento facial intensivo que devuelve luminosidad y suavidad. Piel radiante desde la primera sesión.",
-    price: 8500,
+      "Peinado y fijación de cejas para un look más definido y natural. Duración de hasta 6 semanas.",
+    price: 14000,
+    category: "rostro",
+    image: "/images/services/laminado-cejas.jpeg",
+  },
+  {
+    id: "extensiones-clasicas",
+    name: "Extensiones Clásicas",
+    description:
+      "Pestaña por pestaña para una mirada más abierta y natural. Resultado duradero y elegante.",
+    price: 14000,
+    category: "rostro",
+    image: "/images/services/extensiones-pestanas.jpeg",
+    imageClass: "-rotate-90 scale-150 -translate-y-12",
+  },
+  {
+    id: "volumen-2d",
+    name: "Volumen 2D",
+    description:
+      "Técnica que aporta el doble de densidad a tus pestañas. Mirada más intensa y llamativa.",
+    price: 16000,
     category: "rostro",
   },
   {
-    id: "manicura-pedicura-combo",
-    name: "Manicura + Pedicura Combo",
+    id: "volumen-3d",
+    name: "Volumen 3D",
     description:
-      "Las dos juntas con esmaltado incluido. El combo más pedido, ideal para salir con todo.",
-    price: 10000,
-    category: "manos",
-    badge: "PROMO DEL MES",
+      "Máximo volumen y drama para una mirada impactante. Ideal para ocasiones especiales.",
+    price: 17000,
+    category: "rostro",
   },
   {
-    id: "depilacion-cera",
-    name: "Depilación con Cera",
-    description:
-      "Piernas, axilas, bikini. Resultado suave y duradero con cera de alta calidad.",
-    price: 4500,
-    category: "cuerpo",
-  },
-  {
-    id: "manicura-semipermanente",
-    name: "Manicura Semipermanente",
+    id: "esmaltado-semipermanente",
+    name: "Esmaltado Semipermanente",
     description:
       "Esmaltado de larga duración que no astilla ni se despega. Manos perfectas por semanas.",
-    price: 5000,
+    price: 13000,
     category: "manos",
+    image: "/images/services/esmaltado-semipermanente.jpeg",
   },
   {
-    id: "limpieza-facial",
-    name: "Limpieza Facial Profunda",
+    id: "capping",
+    name: "Capping",
     description:
-      "Extracción, vapor y mascarilla. Piel limpia y sin impurezas, lista para brillar.",
-    price: 7000,
-    category: "rostro",
+      "Refuerzo de gel sobre tu uña natural. Mayor resistencia y brillo impecable.",
+    price: 14000,
+    category: "manos",
+    image: "/images/services/capping.jpeg",
+  },
+  {
+    id: "soft-gel",
+    name: "Soft Gel",
+    description:
+      "Extensión de uñas con gel suave, liviano y con terminación natural.",
+    price: 16000,
+    category: "manos",
+    image: "/images/services/softgel.jpeg",
+  },
+  {
+    id: "depilacion-definitiva",
+    name: "Depilación Definitiva",
+    description:
+      "Tecnología Soprano Ice. Eliminación definitiva del vello de forma indolora y segura.",
+    price: 16000,
+    category: "cuerpo",
+    video: "/images/services/depilacion-definitiva.mp4",
+  },
+  {
+    id: "electrodos",
+    name: "Electrodos",
+    description:
+      "Tratamiento corporal con electrodos para tonificar y reafirmar la musculatura.",
+    price: 15000,
+    category: "cuerpo",
+    video: "/images/services/electrodos.mp4",
   },
 ];

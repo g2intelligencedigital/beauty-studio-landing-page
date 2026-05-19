@@ -1,14 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Wind, Hand, Footprints } from "lucide-react";
+import { Sparkles, Wind, Hand } from "lucide-react";
 import { CATEGORY_SUBCATEGORIES } from "@/data/services";
 
 const categories = [
   { key: "rostro" as const, label: "Rostro", Icon: Sparkles },
   { key: "cuerpo" as const, label: "Cuerpo", Icon: Wind },
   { key: "manos" as const, label: "Manos", Icon: Hand },
-  { key: "pies" as const, label: "Pies", Icon: Footprints },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -17,7 +16,7 @@ export function CategoriesStrip() {
   return (
     <section className="bg-[#faf0f3] py-14 border-t border-[#f0c8d0]">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0">
+          <div className="grid grid-cols-3 gap-8 md:gap-0">
           {categories.map(({ key, label, Icon }, i) => (
             <motion.div
               key={key}
