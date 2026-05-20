@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL ?? "https://calendly.com/beautyystudio/turno";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 const IS_LOCALHOST = BASE_URL.startsWith("http://localhost");
@@ -81,8 +83,10 @@ export async function POST(request: Request) {
     return json({ init_point: data.init_point });
 
   } catch (e) {
-    console.error("CATCH:", e);
-    return new Response(JSON.stringify({ error: "Error interno del servidor" }), {
+    const msg = e instanceof Error ? e.message : String(e);
+    const stack = e instanceof Error ? (e.stack ?? "").split("\n").slice(0, 3).join(" | ") : "";
+    console.error("CATCH:", msg, stack);
+    return new Response(JSON.stringify({ error: msg, stack }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
