@@ -29,7 +29,7 @@ export function Nosotras() {
         >
           <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&h=875&fit=crop&q=80"
+              src="/images/local.jpeg"
               alt="Interior de Beautyy Studio, centro de estética en San Luis"
               fill
               className="object-cover"

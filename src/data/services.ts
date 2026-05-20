@@ -62,6 +62,7 @@ export const services: Service[] = [
       "Técnica que aporta el doble de densidad a tus pestañas. Mirada más intensa y llamativa.",
     price: 16000,
     category: "rostro",
+    image: "/images/services/volumen-2d.jpeg",
   },
   {
     id: "volumen-3d",
@@ -70,6 +71,7 @@ export const services: Service[] = [
       "Máximo volumen y drama para una mirada impactante. Ideal para ocasiones especiales.",
     price: 17000,
     category: "rostro",
+    image: "/images/services/volumen-3d.jpeg",
   },
   {
     id: "esmaltado-semipermanente",
