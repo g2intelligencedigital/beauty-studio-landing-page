@@ -13,22 +13,18 @@ function json(data: unknown, status = 200) {
 
 export async function POST(request: Request) {
   try {
-    console.error("step:1");
     const accessToken = process.env.MP_ACCESS_TOKEN;
-    console.error("step:2 token len:", accessToken ? accessToken.length : "MISSING");
 
     if (!accessToken) {
       return json({ error: "MP_ACCESS_TOKEN no configurado" }, 500);
     }
 
-    console.error("step:3 parse body");
     const body = await request.json() as {
       items?: { id: string; title: string; quantity: number; unit_price: number }[];
       clientName?: string;
       services?: string;
     };
 
-    console.error("step:4 items:", Array.isArray(body.items));
     const items = body.items ?? [];
     const clientName = String(body.clientName ?? "");
     const services = String(body.services ?? "");
@@ -36,8 +32,6 @@ export async function POST(request: Request) {
     if (items.length === 0) {
       return json({ error: "No hay servicios en el carrito" }, 400);
     }
-
-    console.error("step:5 build pref");
     const preference = {
       items: items.map((item) => ({
         id: item.id,
@@ -56,7 +50,6 @@ export async function POST(request: Request) {
       metadata: { calendly_url: CALENDLY_URL },
     };
 
-    console.error("step:6 call MP");
     const mpRes = await fetch("https://api.mercadopago.com/checkout/preferences", {
       method: "POST",
       headers: {
@@ -66,9 +59,7 @@ export async function POST(request: Request) {
       body: JSON.stringify(preference),
     });
 
-    console.error("step:7 MP status:", mpRes.status);
     const rawBody = await mpRes.text();
-    console.error("step:8 raw:", rawBody.slice(0, 200));
 
     if (!mpRes.ok) {
       let msg = "Error en Mercado Pago";
@@ -83,10 +74,8 @@ export async function POST(request: Request) {
     return json({ init_point: data.init_point });
 
   } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e);
-    const stack = e instanceof Error ? (e.stack ?? "").split("\n").slice(0, 3).join(" | ") : "";
-    console.error("CATCH:", msg, stack);
-    return new Response(JSON.stringify({ error: msg, stack }), {
+    console.error("MP route error:", e);
+    return new Response(JSON.stringify({ error: "Error interno del servidor" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
