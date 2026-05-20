@@ -33,9 +33,14 @@ export function Hero() {
             className="inline-flex items-center gap-2 bg-white/70 border border-[#f0c8d0] rounded-full px-4 py-2 w-fit"
           >
             <MapPin size={13} className="text-[#c9647b]" />
-            <span className="text-[11px] tracking-widest uppercase font-sans text-[#7a6468] font-medium">
-              San Luis, Argentina
-            </span>
+            <a
+              href="https://maps.app.goo.gl/vD1pPJbor1CLvGYP7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] tracking-widest uppercase font-sans text-[#7a6468] font-medium hover:text-[#c9647b] transition-colors"
+            >
+              Av. Lafinur 164, San Luis, Argentina
+            </a>
           </motion.div>
 
           {/* Heading */}

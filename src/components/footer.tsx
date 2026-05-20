@@ -77,10 +77,15 @@ export function Footer() {
                 <MessageCircle size={15} />
                 WhatsApp
               </a>
-              <span className="inline-flex items-center gap-2.5 font-sans text-sm text-white/60">
+              <a
+                href="https://maps.app.goo.gl/vD1pPJbor1CLvGYP7"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 font-sans text-sm text-white/60 hover:text-white transition-colors"
+              >
                 <MapPin size={15} />
                 San Luis, Argentina
-              </span>
+              </a>
             </div>
           </div>
         </div>
@@ -88,7 +93,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/30">
           <p>© {new Date().getFullYear()} Beautyy Studio. Todos los derechos reservados.</p>
-
+          <p className="text-white/20 text-xs">Powered by G2 Intelligence</p>
         </div>
       </div>
     </footer>
