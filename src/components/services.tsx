@@ -87,7 +87,8 @@ export function Services() {
                     <img
                       src={service.image}
                       alt={service.name}
-                      className={`w-full h-full object-cover ${service.imageClass ?? ""}`}
+                      className={`w-full h-full object-cover object-center ${service.imageClass ?? ""}`}
+                      style={{ imageOrientation: "from-image" }}
                       loading="lazy"
                     />
                   </div>
