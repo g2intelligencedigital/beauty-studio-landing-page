@@ -1,16 +1,21 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Script from "next/script";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Home } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const CALENDLY_BASE = process.env.NEXT_PUBLIC_CALENDLY_URL ?? "https://calendly.com/beautyystudio/turno";
 
 function ReservaContent() {
   const params = useSearchParams();
-  const name = params.get("name") ?? "";
-  const services = params.get("services") ?? "";
+  const router = useRouter();
+  // Fix: MP re-encodes spaces as + in redirect URLs — replace before display
+  const name = (params.get("name") ?? "").replace(/\+/g, " ");
+  const services = (params.get("services") ?? "").replace(/\+/g, " ");
+  const [booked, setBooked] = useState(false);
+  const [countdown, setCountdown] = useState(10);
 
   const calendlyUrl = new URL(CALENDLY_BASE);
   if (name) calendlyUrl.searchParams.set("name", name);
@@ -18,6 +23,28 @@ function ReservaContent() {
   calendlyUrl.searchParams.set("hide_gdpr_banner", "1");
   calendlyUrl.searchParams.set("background_color", "fde8ec");
   calendlyUrl.searchParams.set("primary_color", "c9647b");
+
+  // Listen for Calendly booking completion
+  useEffect(() => {
+    function handleMessage(e: MessageEvent) {
+      if (e.data && e.data.event === "calendly.event_scheduled") {
+        setBooked(true);
+      }
+    }
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
+  // Countdown + auto-redirect after booking
+  useEffect(() => {
+    if (!booked) return;
+    if (countdown <= 0) {
+      router.push("/");
+      return;
+    }
+    const t = setTimeout(() => setCountdown((c) => c - 1), 1000);
+    return () => clearTimeout(t);
+  }, [booked, countdown, router]);
 
   // Re-init widget after script loads or params change
   useEffect(() => {
@@ -65,6 +92,28 @@ function ReservaContent() {
         </div>
       </div>
 
+      {/* Post-booking banner */}
+      {booked && (
+        <div className="max-w-3xl mx-auto px-4 mb-6">
+          <div className="bg-[#c9647b] text-white rounded-2xl px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+            <div className="text-center sm:text-left">
+              <p className="font-heading text-xl">¡Turno agendado!</p>
+              <p className="font-sans text-sm text-white/80">
+                Vas a recibir la confirmación por email. Redirigiendo al inicio en{" "}
+                <span className="font-bold text-white">{countdown}s</span>…
+              </p>
+            </div>
+            <a
+              href="/"
+              className="inline-flex items-center gap-2 bg-white text-[#c9647b] font-sans font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-[#faf0f3] transition-colors whitespace-nowrap"
+            >
+              <Home size={15} />
+              Volver al inicio
+            </a>
+          </div>
+        </div>
+      )}
+
       {/* Calendly embed */}
       <div className="max-w-3xl mx-auto px-4 pb-12">
         <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
@@ -75,9 +124,19 @@ function ReservaContent() {
             style={{ minWidth: 320, height: 700 }}
           />
         </div>
-        <p className="font-sans text-[#7a6468] text-xs text-center mt-4">
-          Una vez que elijas el horario, recibirás la confirmación por email.
-        </p>
+        {!booked && (
+          <p className="font-sans text-[#7a6468] text-xs text-center mt-4">
+            Una vez que elijas el horario, recibirás la confirmación por email.
+          </p>
+        )}
+        {!booked && (
+          <div className="text-center mt-3">
+            <a href="/" className="inline-flex items-center gap-1.5 font-sans text-sm text-[#7a6468] hover:text-[#c9647b] transition-colors underline underline-offset-4 decoration-[#f0c8d0] hover:decoration-[#c9647b]">
+              <Home size={13} />
+              Volver al inicio
+            </a>
+          </div>
+        )}
       </div>
     </main>
   );
