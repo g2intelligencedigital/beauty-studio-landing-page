@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Menu, MessageCircle } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { WA_TURNO_URL } from "@/lib/constants";
@@ -7,21 +8,23 @@ import { WA_TURNO_URL } from "@/lib/constants";
 const navLinks = [
   { label: "SERVICIOS", href: "#servicios" },
   { label: "NOSOTRAS", href: "#nosotras" },
+  { label: "GALERÍA", href: "#galeria" },
   { label: "TURNOS", href: "#turnos" },
 ];
 
 export function Navbar() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#1c1c1c]">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-xl border-b border-gray-200/50">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex flex-col leading-none">
-          <span className="font-heading text-white text-sm font-bold tracking-widest uppercase">
-            Beautyy Studio
-          </span>
-          <span className="text-white/40 text-[9px] tracking-[0.2em] uppercase font-sans">
-            San Luis · Argentina
-          </span>
+        <div className="flex items-center gap-3">
+          <Image
+            src="/images/Logo-removebg-preview.png"
+            alt="Beautyy Studio"
+            width={240}
+            height={72}
+            className="h-16 w-auto"
+          />
         </div>
 
         {/* Desktop nav */}
@@ -30,7 +33,7 @@ export function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-white/70 hover:text-[#f5c6d0] text-[11px] tracking-[0.18em] uppercase font-sans font-medium transition-colors duration-200"
+              className="text-gray-600 hover:text-[#c9647b] text-[11px] tracking-[0.18em] uppercase font-sans font-medium transition-colors duration-200"
             >
               {link.label}
             </a>
@@ -51,7 +54,7 @@ export function Navbar() {
         {/* Mobile sheet */}
         <Sheet>
           <SheetTrigger
-            className="md:hidden text-white/80 hover:text-white transition-colors bg-transparent border-none cursor-pointer"
+            className="md:hidden text-gray-700 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer"
             aria-label="Abrir menú"
           >
             <Menu size={22} />
@@ -62,13 +65,14 @@ export function Navbar() {
             showCloseButton={true}
           >
             <div className="flex flex-col gap-8 px-4">
-              <div className="flex flex-col leading-none mb-2">
-                <span className="font-heading text-white text-base font-bold tracking-widest uppercase">
-                  Beautyy Studio
-                </span>
-                <span className="text-white/40 text-[9px] tracking-[0.2em] uppercase font-sans mt-0.5">
-                  San Luis · Argentina
-                </span>
+              <div className="flex items-center mb-2">
+                <Image
+                  src="/images/Logo-removebg-preview.png"
+                  alt="Beautyy Studio"
+                  width={240}
+                  height={72}
+                  className="h-20 w-auto"
+                />
               </div>
               <nav className="flex flex-col gap-6">
                 {navLinks.map((link) => (

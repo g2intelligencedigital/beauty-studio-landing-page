@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MessageCircle, MapPin } from "lucide-react";
 import { InstagramIcon } from "@/components/icons";
 import { WA_CONSULTA_URL, IG_URL } from "@/lib/constants";
@@ -17,10 +18,14 @@ export function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-3">
             <div>
-              <p className="font-heading text-white text-2xl tracking-wide">
-                Beautyy Studio
-              </p>
-              <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 font-sans mt-0.5">
+              <Image
+                src="/images/Logo-removebg-preview.png"
+                alt="Beautyy Studio"
+                width={260}
+                height={78}
+                className="h-20 w-auto"
+              />
+              <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 font-sans mt-1.5">
                 San Luis · Argentina
               </p>
             </div>
@@ -83,7 +88,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/30">
           <p>© {new Date().getFullYear()} Beautyy Studio. Todos los derechos reservados.</p>
-          <p>Powered by G2 Intelligence</p>
+          <p className="text-white/20 text-xs">Powered by G2 Intelligence</p>
         </div>
       </div>
     </footer>

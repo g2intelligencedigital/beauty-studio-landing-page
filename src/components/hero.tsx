@@ -34,7 +34,7 @@ export function Hero() {
           >
             <MapPin size={13} className="text-[#c9647b]" />
             <span className="text-[11px] tracking-widest uppercase font-sans text-[#7a6468] font-medium">
-              San Luis, Argentina · Aesthetics Studio
+              San Luis, Argentina
             </span>
           </motion.div>
 
