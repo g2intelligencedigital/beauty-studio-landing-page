@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { services, CATEGORY_LABELS, type ServiceCategory } from "@/data/services";
+import { Plus, Check } from "lucide-react";
+import { services, CATEGORY_LABELS, type ServiceCategory, type Service } from "@/data/services";
+import { useCart } from "@/lib/cart-context";
 
 const ALL = "todos" as const;
 type FilterType = typeof ALL | ServiceCategory;
@@ -20,6 +22,34 @@ const badgeStyle: Record<string, string> = {
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;
+
+function AddToCartButton({ service }: { service: Service }) {
+  const { addItem, items } = useCart();
+  const inCart = items.some((i) => i.service.id === service.id);
+
+  return (
+    <button
+      onClick={() => addItem(service)}
+      className={`flex items-center justify-center gap-2 w-full py-2.5 rounded-full text-xs font-sans font-semibold tracking-wide transition-all duration-200 ${
+        inCart
+          ? "bg-[#f5c6d0] text-[#c9647b]"
+          : "bg-[#c9647b] hover:bg-[#a84f64] text-white"
+      }`}
+    >
+      {inCart ? (
+        <>
+          <Check size={13} />
+          Agregado
+        </>
+      ) : (
+        <>
+          <Plus size={13} />
+          Reservar turno
+        </>
+      )}
+    </button>
+  );
+}
 
 export function Services() {
   const [active, setActive] = useState<FilterType>(ALL);
@@ -125,14 +155,17 @@ export function Services() {
                     {service.description}
                   </p>
                 </div>
-                <div className="pt-2 border-t border-[#f0c8d0]">
-                  <span className="font-sans text-[#7a6468] text-xs tracking-widest uppercase">
-                    desde{" "}
-                  </span>
-                  <span className="font-sans text-[#c9647b] font-bold text-xl">
-                    ${service.price.toLocaleString("es-AR")}
-                  </span>
+                <div className="pt-2 border-t border-[#f0c8d0] flex items-center justify-between">
+                  <div>
+                    <span className="font-sans text-[#7a6468] text-xs tracking-widest uppercase">
+                      desde{" "}
+                    </span>
+                    <span className="font-sans text-[#c9647b] font-bold text-xl">
+                      ${service.price.toLocaleString("es-AR")}
+                    </span>
+                  </div>
                 </div>
+                <AddToCartButton service={service} />
               </motion.div>
             ))}
           </AnimatePresence>
