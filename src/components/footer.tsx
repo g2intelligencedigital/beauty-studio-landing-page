@@ -77,10 +77,15 @@ export function Footer() {
                 <MessageCircle size={15} />
                 WhatsApp
               </a>
-              <span className="inline-flex items-center gap-2.5 font-sans text-sm text-white/60">
+              <a
+                href="https://maps.app.goo.gl/vD1pPJbor1CLvGYP7"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 font-sans text-sm text-white/60 hover:text-white transition-colors"
+              >
                 <MapPin size={15} />
                 San Luis, Argentina
-              </span>
+              </a>
             </div>
           </div>
         </div>
