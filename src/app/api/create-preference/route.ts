@@ -6,18 +6,23 @@ const IS_LOCALHOST = BASE_URL.startsWith("http://localhost");
 
 export async function POST(req: NextRequest) {
   try {
+    console.log("step:1 env check");
     const accessToken = process.env.MP_ACCESS_TOKEN;
     if (!accessToken) {
       return NextResponse.json({ error: "MP_ACCESS_TOKEN no configurado" }, { status: 500 });
     }
 
+    console.log("step:2 parse body");
     const body = await req.json();
+    console.log("step:3 body ok", typeof body);
     const { items, clientName = "", services = "" } = body;
+    console.log("step:4 items:", Array.isArray(items), "client:", typeof clientName);
 
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "No hay servicios en el carrito" }, { status: 400 });
     }
 
+    console.log("step:5 build preference");
     const preference = {
       items: items.map((item: { id: string; title: string; quantity: number; unit_price: number }) => ({
         id: item.id,
