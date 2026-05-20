@@ -6,23 +6,23 @@ const IS_LOCALHOST = BASE_URL.startsWith("http://localhost");
 
 export async function POST(req: NextRequest) {
   try {
-    console.log("step:1 env check");
+    console.error("step:1 env check");
     const accessToken = process.env.MP_ACCESS_TOKEN;
     if (!accessToken) {
       return NextResponse.json({ error: "MP_ACCESS_TOKEN no configurado" }, { status: 500 });
     }
 
-    console.log("step:2 parse body");
+    console.error("step:2 parse body");
     const body = await req.json();
-    console.log("step:3 body ok", typeof body);
+    console.error("step:3 body ok", typeof body);
     const { items, clientName = "", services = "" } = body;
-    console.log("step:4 items:", Array.isArray(items), "client:", typeof clientName);
+    console.error("step:4 items:", Array.isArray(items), "client:", typeof clientName);
 
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "No hay servicios en el carrito" }, { status: 400 });
     }
 
-    console.log("step:5 build preference");
+    console.error("step:5 build preference");
     const preference = {
       items: items.map((item: { id: string; title: string; quantity: number; unit_price: number }) => ({
         id: item.id,
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
       metadata: { calendly_url: CALENDLY_URL },
     };
 
-    console.log("MP pref:", JSON.stringify(preference));
+    console.error("MP pref:", JSON.stringify(preference));
     const mpRes = await fetch("https://api.mercadopago.com/checkout/preferences", {
       method: "POST",
       headers: {
@@ -51,10 +51,10 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify(preference),
     });
 
-    console.log("MP status:", mpRes.status);
+    console.error("MP status:", mpRes.status);
     // Read body as text first — avoids Node 18 undici "body already used" TypeError
     const rawBody = await mpRes.text();
-    console.log("MP raw:", rawBody.slice(0, 300));
+    console.error("MP raw:", rawBody.slice(0, 300));
 
     if (!mpRes.ok) {
       console.error("MP error:", rawBody);
