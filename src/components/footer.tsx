@@ -83,17 +83,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/30">
           <p>© {new Date().getFullYear()} Beautyy Studio. Todos los derechos reservados.</p>
-          <p>
-            Built with{" "}
-            <a
-              href="https://tododeia.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/40 hover:text-white/60 transition-colors"
-            >
-              Claude Web Builder by Tododeia
-            </a>
-          </p>
+          <p>Powered by G2 Intelligence</p>
         </div>
       </div>
     </footer>
