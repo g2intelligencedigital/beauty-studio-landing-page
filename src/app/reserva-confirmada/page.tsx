@@ -21,8 +21,10 @@ function ReservaContent() {
 
   // Re-init widget after script loads or params change
   useEffect(() => {
-    if (typeof window !== "undefined" && (window as { Calendly?: { initInlineWidget: (opts: object) => void } }).Calendly) {
-      (window as { Calendly: { initInlineWidget: (opts: object) => void } }).Calendly.initInlineWidget({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cal = (window as any).Calendly;
+    if (cal) {
+      cal.initInlineWidget({
         url: calendlyUrl.toString(),
         parentElement: document.getElementById("calendly-embed"),
       });
@@ -36,7 +38,8 @@ function ReservaContent() {
         src="https://assets.calendly.com/assets/external/widget.js"
         strategy="afterInteractive"
         onLoad={() => {
-          (window as { Calendly: { initInlineWidget: (opts: object) => void } }).Calendly.initInlineWidget({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (window as any).Calendly.initInlineWidget({
             url: calendlyUrl.toString(),
             parentElement: document.getElementById("calendly-embed"),
           });
