@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
       metadata: { calendly_url: CALENDLY_URL },
     };
 
+    console.log("MP pref:", JSON.stringify(preference));
     const mpRes = await fetch("https://api.mercadopago.com/checkout/preferences", {
       method: "POST",
       headers: {
@@ -45,8 +46,10 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify(preference),
     });
 
+    console.log("MP status:", mpRes.status);
     // Read body as text first — avoids Node 18 undici "body already used" TypeError
     const rawBody = await mpRes.text();
+    console.log("MP raw:", rawBody.slice(0, 300));
 
     if (!mpRes.ok) {
       console.error("MP error:", rawBody);
