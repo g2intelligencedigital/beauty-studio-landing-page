@@ -17,12 +17,15 @@ function ReservaContent() {
   const [booked, setBooked] = useState(false);
   const [countdown, setCountdown] = useState(10);
 
-  const calendlyUrl = new URL(CALENDLY_BASE);
-  if (name) calendlyUrl.searchParams.set("name", name);
-  if (services) calendlyUrl.searchParams.set("a1", services);
-  calendlyUrl.searchParams.set("hide_gdpr_banner", "1");
-  calendlyUrl.searchParams.set("background_color", "fde8ec");
-  calendlyUrl.searchParams.set("primary_color", "c9647b");
+  // Build URL manually — URLSearchParams encodes spaces as + but Calendly doesn't decode them
+  const qp = [
+    "hide_gdpr_banner=1",
+    "background_color=fde8ec",
+    "primary_color=c9647b",
+    ...(name ? [`name=${encodeURIComponent(name)}`] : []),
+    ...(services ? [`a1=${encodeURIComponent(services)}`] : []),
+  ];
+  const calendlyUrlStr = `${CALENDLY_BASE}?${qp.join("&")}`;
 
   // Listen for Calendly booking completion
   useEffect(() => {
@@ -52,7 +55,7 @@ function ReservaContent() {
     const cal = (window as any).Calendly;
     if (cal) {
       cal.initInlineWidget({
-        url: calendlyUrl.toString(),
+        url: calendlyUrlStr,
         parentElement: document.getElementById("calendly-embed"),
       });
     }
@@ -67,7 +70,7 @@ function ReservaContent() {
         onLoad={() => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (window as any).Calendly.initInlineWidget({
-            url: calendlyUrl.toString(),
+            url: calendlyUrlStr,
             parentElement: document.getElementById("calendly-embed"),
           });
         }}
@@ -120,7 +123,7 @@ function ReservaContent() {
           <div
             id="calendly-embed"
             className="calendly-inline-widget"
-            data-url={calendlyUrl.toString()}
+            data-url={calendlyUrlStr}
             style={{ minWidth: 320, height: 700 }}
           />
         </div>
