@@ -51,7 +51,7 @@ export function Contacto() {
           {/* Mapa */}
           <div className="w-full max-w-xl mt-4 rounded-2xl overflow-hidden shadow-lg">
             <iframe
-              src="https://maps.google.com/maps?q=beautyy+studio+san+luis+argentina&output=embed&hl=es"
+              src="https://maps.google.com/maps?q=-33.3116295,-66.3440071&z=17&output=embed&hl=es"
               width="100%"
               height="220"
               style={{ border: 0 }}
