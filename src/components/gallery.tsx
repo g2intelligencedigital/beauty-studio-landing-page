@@ -7,28 +7,34 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const photos = [
   {
-    src: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=700&fit=crop&q=80",
-    alt: "Tratamiento de lifting de pestañas",
+    src: "/images/gallery/1.jpeg",
+    alt: "Lifting de pestañas — Beautyy Studio",
+    position: "center 30%",
   },
   {
-    src: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&h=700&fit=crop&q=80",
-    alt: "Hidratación facial profunda",
+    src: "/images/gallery/2.jpeg",
+    alt: "Semipermanente azul — Beautyy Studio",
+    position: "center 40%",
   },
   {
-    src: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=700&fit=crop&q=80",
-    alt: "Manicura y nail art",
+    src: "/images/gallery/3.jpeg",
+    alt: "Tratamiento facial con cejas perfiladas — Beautyy Studio",
+    position: "center 25%",
   },
   {
-    src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&h=700&fit=crop&q=80",
-    alt: "Ambiente del centro de estética",
+    src: "/images/gallery/4.jpeg",
+    alt: "Manicura marmolada nude — Beautyy Studio",
+    position: "center 35%",
   },
   {
-    src: "https://images.unsplash.com/photo-1519415943484-9fa1873496d4?w=600&h=700&fit=crop&q=80",
-    alt: "Pedicura y esmaltado",
+    src: "/images/gallery/5.jpeg",
+    alt: "Francesa azul con nail art — Beautyy Studio",
+    position: "center 20%",
   },
   {
-    src: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&h=700&fit=crop&q=80",
-    alt: "Tratamiento de cejas y pestañas",
+    src: "/images/gallery/6.jpeg",
+    alt: "Semipermanente rojo — Beautyy Studio",
+    position: "center 30%",
   },
 ];
 
@@ -66,7 +72,8 @@ export function Gallery() {
                 alt={photo.alt}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                style={{ objectPosition: photo.position }}
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 400px"
               />
             </motion.div>
           ))}
